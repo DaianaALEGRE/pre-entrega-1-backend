@@ -1,5 +1,5 @@
 import fs from 'fs/promises';
-// Métodos de utilidad para la lectura y escritura de archivos
+
 export const readFile = async (filePath) => {
   try {
     const data = await fs.readFile(filePath, 'utf8');

@@ -1,17 +1,22 @@
 import express from 'express';
-import cartService from '../services/cartService.js';
+import {
+  getCartItems,
+  addToCart,
+  updateCartItem,
+  removeFromCart,
+  clearCart,
+  getCartTotal,
+  checkout,
+} from '../controllers/cartController.js';
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
-  try {
-    const newCart = await cartService.createCart();
-    res.json({ message: 'Nuevo carrito creado con éxito.', cart: newCart });
-  } catch (error) {
-    res.status(500).json({ error: 'Error al crear el carrito.' });
-  }
-});
-
-
+router.get('/:cid', getCartItems);
+router.post('/:cid/product/:pid', addToCart);
+router.put('/:cid/product/:pid', updateCartItem);
+router.delete('/:cid/product/:pid', removeFromCart);
+router.delete('/:cid/clear-cart', clearCart);
+router.get('/:cid/total', getCartTotal);
+router.post('/:cid/checkout', checkout);
 
 export default router;

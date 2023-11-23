@@ -7,14 +7,22 @@ const PORT = 8080;
 
 app.use(express.json());
 
-app.use('/products', productRoutes);
+// Rutas de productos y carritos
+app.use('/api/products', productRoutes);
 app.use('/api/carts', cartRoutes);
 
+// raíz ("/")
+app.get('/', (req, res) => {
+  res.send('¡Bienvenido a mi aplicación Express!');
+});
+
+// Manejo de errores
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send('Algo salió mal!');
+  console.log('Hola');
+  res.status(500).json({ error: err.message });
 });
 
 app.listen(PORT, () => {
-  console.log(`Servidor Express iniciado en http://localhost:${PORT}/products`);
+  console.log(`Servidor Express iniciado en http://localhost:${PORT}/`);
 });

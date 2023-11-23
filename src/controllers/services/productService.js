@@ -30,6 +30,10 @@ class ProductService {
     }
   }
 
+  getProducts() {
+    return this.products;
+  }
+
   getProductById(productId) {
     const product = this.products.find((p) => p.id === productId);
     if (!product) {
@@ -87,9 +91,19 @@ class ProductService {
     if (productIndex === -1) {
       throw new Error('Producto no encontrado.');
     }
-
+  
     const productToUpdate = this.products[productIndex];
-    Object.assign(productToUpdate, updatedFields);
+  
+    if (updatedFields.id) {
+      throw new Error('No puedes actualizar el ID directamente.');
+    }
+  
+    for (const key in updatedFields) {
+      if (key !== 'id' && updatedFields.hasOwnProperty(key)) {
+        productToUpdate[key] = updatedFields[key];
+      }
+    }
+  
     this.saveProducts().catch((error) => {
       console.log('Error al actualizar el producto:', error.message);
     });

@@ -6,7 +6,7 @@ const CARTS_FILE_PATH = './data/carts.json';
 class CartService {
   constructor() {
     this.carts = [];
-    this.nextCartId = 1;
+    this.nextcid = 1;
     this.loadingPromise = this.loadCarts();
   }
 
@@ -14,9 +14,9 @@ class CartService {
     try {
       const data = await readFile(CARTS_FILE_PATH);
       this.carts = JSON.parse(data);
-      this.nextCartId = this.carts.length > 0 ? Math.max(...this.carts.map(c => c.id)) + 1 : 1;
+      this.nextcid = this.carts.length > 0 ? Math.max(...this.carts.map(c => c.id)) + 1 : 1;
     } catch (error) {
-      console.log('Error al cargar carritos:', error.message);
+      console.log('Error al cargar carrito:', error.message);
       throw error;
     }
   }
@@ -31,26 +31,31 @@ class CartService {
     }
   }
 
-  getCart(cartId) {
-    const cart = this.carts.find((c) => c.id === cartId);
+  getCart(cid) {
+    const numericCID = parseInt(cid, 10);
+    const cart = this.carts.find((c) => {
+      return c.id === numericCID;
+    });
+
     if (!cart) {
       throw new Error('Carrito no encontrado.');
     }
+
     return cart;
   }
 
-  getCartItems(cartId) {
-    const cart = this.getCart(cartId);
-    return cart.products;
+  getCartItems(cid) {
+    const cart = this.getCart(cid);
+    const carts = cart.products.map(item => ({ productId: item.productId, quantity: item.quantity }));
+    return carts;
   }
 
-  addToCart(cartId, productId, quantity) {
-    const cart = this.getCart(cartId);
+  addToCart(cid, productId, quantity) {
+    const cart = this.getCart(cid);
 
     if (quantity <= 0) {
       throw new Error('La cantidad debe ser mayor que cero.');
     }
-
     const existingProductIndex = cart.products.findIndex((p) => p.productId === productId);
 
     if (existingProductIndex !== -1) {
@@ -62,8 +67,10 @@ class CartService {
     this.saveCarts();
   }
 
-  updateCartItem(cartId, productId, quantity) {
-    const cart = this.getCart(cartId);
+
+
+  updateCartItem(cid, productId, quantity) {
+    const cart = this.getCart(cid);
 
     if (quantity <= 0) {
       throw new Error('La cantidad debe ser mayor que cero.');
@@ -79,8 +86,8 @@ class CartService {
     }
   }
 
-  removeFromCart(cartId, productId) {
-    const cart = this.getCart(cartId);
+  removeFromCart(cid, productId) {
+    const cart = this.getCart(cid);
 
     const existingProductIndex = cart.products.findIndex((p) => p.productId === productId);
 
@@ -92,14 +99,14 @@ class CartService {
     }
   }
 
-  clearCart(cartId) {
-    const cart = this.getCart(cartId);
+  clearCart(cid) {
+    const cart = this.getCart(cid);
     cart.products = [];
     this.saveCarts();
   }
 
-  calculateTotal(cartId) {
-    const cart = this.getCart(cartId);
+  calculateTotal(cid) {
+    const cart = this.getCart(cid);
 
     if (cart.products.length === 0) {
       return 0;
@@ -117,20 +124,18 @@ class CartService {
     return total;
   }
 
-  checkout(cartId) {
-    const cart = this.getCart(cartId);
+  checkout(cid) {
+    const cart = this.getCart(cid);
 
     if (cart.products.length === 0) {
       throw new Error('El carrito está vacío. No se puede realizar el pago.');
     }
 
-    // falta logica de compra y pago finalizado
-
     for (const cartItem of cart.products) {
       ProductService.reduceProductStock(cartItem.productId, cartItem.quantity);
     }
 
-    this.clearCart(cartId);
+    this.clearCart(cid);
 
     return { message: 'Compra realizada con éxito.' };
   }
