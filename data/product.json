@@ -1,0 +1,101 @@
+[
+    {
+      "title": "Producto prueba 0",
+      "description": "esto es un producto de prueba",
+      "price": 50,
+      "thumbnail": "sin imagen",
+      "code": "a556",
+      "stock": 12,
+      "id": 0
+    },
+    {
+      "title": "Producto prueba 1",
+      "description": "esto es un producto de prueba",
+      "price": 10,
+      "thumbnail": "sin imagen",
+      "code": "a557",
+      "stock": 5,
+      "id": 1
+    },
+    {
+      "title": "Producto prueba 2",
+      "description": "esto es un producto de prueba",
+      "price": 10,
+      "thumbnail": "sin imagen",
+      "code": "a558",
+      "stock": 5,
+      "id": 2
+    },
+    {
+      "title": "Producto prueba 3",
+      "description": "esto es un producto de prueba",
+      "price": 10,
+      "thumbnail": "sin imagen",
+      "code": "a559",
+      "stock": 5,
+      "id": 3
+    },
+    {
+      "title": "Producto prueba 4",
+      "description": "esto es un producto de prueba",
+      "price": 10,
+      "thumbnail": "sin imagen",
+      "code": "a560",
+      "stock": 5,
+      "id":4
+    },
+    {
+      "title": "Producto prueba 5",
+      "description": "esto es un producto de prueba",
+      "price": 10,
+      "thumbnail": "sin imagen",
+      "code": "a561",
+      "stock": 5,
+      "id": 5
+    },
+    {
+      "title": "Producto prueba 6",
+      "description": "esto es un producto de prueba",
+      "price": 10,
+      "thumbnail": "sin imagen",
+      "code": "a562",
+      "stock": 5,
+      "id": 6
+    },
+    {
+      "title": "Producto prueba 7",
+      "description": "esto es un producto de prueba",
+      "price": 10,
+      "thumbnail": "sin imagen",
+      "code": "a563",
+      "stock": 5,
+      "id": 7
+    },
+    {
+      "title": "Producto prueba 8",
+      "description": "esto es un producto de prueba",
+      "price": 10,
+      "thumbnail": "sin imagen",
+      "code": "a564",
+      "stock": 5,
+      "id": 8
+    },
+    {
+      "title": "Producto prueba 9",
+      "description": "esto es un producto de prueba",
+      "price": 10,
+      "thumbnail": "sin imagen",
+      "code": "a565",
+      "stock": 5,
+      "id": 9
+    },
+    {
+      "title": "Producto prueba 10",
+      "description": "esto es un producto de prueba",
+      "price": 10,
+      "thumbnail": "sin imagen",
+      "code": "a566",
+      "stock": 5,
+      "id": 10
+    }
+  ]
