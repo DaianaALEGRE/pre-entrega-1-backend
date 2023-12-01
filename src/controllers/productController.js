@@ -11,64 +11,71 @@ export const getProducts = async (req, res) => {
       res.json(products);
     }
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     res.status(500).json({ error: 'Error al obtener productos.' });
   }
 };
-export const addProduct = (req, res) => {
+
+export const addProduct = async (req, res) => {
   try {
-    const requiredFields = ['title', 'description', 'price', 'thumbnail', 'code', 'stock'];
     const product = req.body;
+    const newProduct = productService.addProduct(product);
 
-    for (const field of requiredFields) {
-      if (!product[field]) {
-        throw new Error(`El campo ${field} es obligatorio.`);
-      }
+    if (newProduct?.error) {
+      res.status(400).json({ error: newProduct.error });
+      return;
     }
 
-    productService.addProduct(product);
-    res.json({ message: 'Producto agregado con éxito.' });
+    res.status(201).json({ message: 'Producto agregado con éxito.', product: newProduct });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error(error.message);
+    res.status(500).json({ error: 'Error interno del servidor.' });
   }
 };
-export const getProductById = (req, res) => {
+
+export const getProductById = async (req, res) => {
   try {
-    const productId = parseInt(req.params.id);
+    const productId = parseInt(req.params.pid);
     const product = productService.getProductById(productId);
-    if (product) {
-      res.json(product);
-    } else {
-      res.status(404).json({ error: 'Producto no encontrado.' });
-    }
+
+    res.json(product);
   } catch (error) {
-    res.status(500).json({ error: 'Error al obtener el producto.' });
+    console.error(error.message);
+    res.status(404).json({ error: 'Producto no encontrado.' });
   }
 };
 
-export const updateProduct = (req, res) => {
+export const updateProduct = async (req, res) => {
   try {
-    const productId = parseInt(req.params.pid);  
+    const productId = parseInt(req.params.pid);
     const updatedFields = req.body;
 
-    if (updatedFields.hasOwnProperty('id')) {
-      delete updatedFields.id;
+    const result = productService.updateProduct(productId, updatedFields);
+    if (result?.error) {
+      res.status(500).json({ error: result.error });
+      return;
     }
 
-    productService.updateProduct(productId, updatedFields);
     res.json({ message: 'Producto actualizado con éxito.' });
   } catch (error) {
+    console.error(error.message);
     res.status(500).json({ error: 'Error al actualizar el producto.' });
   }
 };
 
-
-export const deleteProduct = (req, res) => {
+export const deleteProduct = async (req, res) => {
   try {
-    const productId = parseInt(req.params.id);
-    productService.deleteProduct(productId);
+    const productId = parseInt(req.params.pid);
+    const result = productService.deleteProduct(productId);
+
+    if (result?.error) {
+      res.status(500).json({ error: result.error });
+      return;
+    }
+
     res.json({ message: 'Producto eliminado con éxito.' });
   } catch (error) {
+    console.error(error.message);
     res.status(500).json({ error: 'Error al eliminar el producto.' });
   }
 };

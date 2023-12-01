@@ -16,7 +16,7 @@ class ProductService {
       this.nextProductId = this.products.length > 0 ? Math.max(...this.products.map(p => p.id)) + 1 : 1;
     } catch (error) {
       console.log('Error al cargar productos:', error.message);
-      throw error;
+      throw new Error('Error al cargar productos.');
     }
   }
 
@@ -26,7 +26,7 @@ class ProductService {
       await writeFile(PRODUCTS_FILE_PATH, data);
     } catch (error) {
       console.log('Error al guardar productos:', error.message);
-      throw error;
+      throw new Error('Error al guardar productos.');
     }
   }
 
@@ -62,11 +62,11 @@ class ProductService {
     const { title, description, price, thumbnail, code, stock } = product;
 
     if (!title || !description || !price || !thumbnail || !code || !stock) {
-      throw new Error('Todos los campos son obligatorios.');
+      return { error: 'Todos los campos son obligatorios.' };
     }
 
     if (this.products.some((p) => p.code === code)) {
-      throw new Error('Ya existe un producto con el mismo código.');
+      return { error: 'Ya existe un producto con el mismo código.' };
     }
 
     const newProduct = {
@@ -83,41 +83,46 @@ class ProductService {
     this.products.push(newProduct);
     this.saveProducts().catch((error) => {
       console.log('Error al guardar el nuevo producto:', error.message);
+      return { error: 'Error al guardar el nuevo producto.' };
     });
+
+    return newProduct;
   }
 
   updateProduct(id, updatedFields) {
     const productIndex = this.products.findIndex((p) => p.id === id);
     if (productIndex === -1) {
-      throw new Error('Producto no encontrado.');
+      return { error: 'Producto no encontrado.' };
     }
-  
+
     const productToUpdate = this.products[productIndex];
-  
+
     if (updatedFields.id) {
-      throw new Error('No puedes actualizar el ID directamente.');
+      return { error: 'No puedes actualizar el ID directamente.' };
     }
-  
+
     for (const key in updatedFields) {
       if (key !== 'id' && updatedFields.hasOwnProperty(key)) {
         productToUpdate[key] = updatedFields[key];
       }
     }
-  
+
     this.saveProducts().catch((error) => {
       console.log('Error al actualizar el producto:', error.message);
+      return { error: 'Error al actualizar el producto.' };
     });
   }
 
   deleteProduct(id) {
     const index = this.products.findIndex((p) => p.id === id);
     if (index === -1) {
-      throw new Error('Producto no encontrado.');
+      return { error: 'Producto no encontrado.' };
     }
 
     this.products.splice(index, 1);
     this.saveProducts().catch((error) => {
       console.log('Error al eliminar el producto:', error.message);
+      return { error: 'Error al eliminar el producto.' };
     });
   }
 }
