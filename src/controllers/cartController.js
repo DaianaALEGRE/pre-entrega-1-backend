@@ -101,4 +101,14 @@ export const checkout = (req, res) => {
     }
 }
 
-
+export const deleteCart = (req, res) => {
+    try {
+      const cid = req.params.cid;
+  
+      cartService.deleteCart(cid);
+  
+      res.json({ message: 'Carrito eliminado con éxito.' });
+    } catch (error) {
+      res.status(500).json({ error: 'Error al eliminar el carrito.' });
+    }
+  };

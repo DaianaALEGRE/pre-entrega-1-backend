@@ -7,6 +7,7 @@ import {createCart,
   clearCart,
   getCartTotal,
   checkout,
+ deleteCart,
 } from '../controllers/cartController.js';
 
 const router = express.Router();
@@ -18,5 +19,5 @@ router.delete('/:cid/product/:pid', removeFromCart);
 router.delete('/:cid/clear-cart', clearCart);
 router.get('/:cid/total', getCartTotal);
 router.post('/:cid/checkout', checkout);
-
+router.delete('/:cid', deleteCart);
 export default router;

@@ -147,6 +147,18 @@ class CartService {
 
     return { message: 'Compra realizada con éxito.' };
   }
+  deleteCart(cid) {
+    const numericCID = parseInt(cid, 10);
+    const cartIndex = this.carts.findIndex((c) => c.id === numericCID);
+
+    if (cartIndex !== -1) {
+      this.carts.splice(cartIndex, 1);
+      this.saveCarts();
+    } else {
+      throw new Error('Carrito no encontrado.');
+    }
+  }
+
 }
 
 export default new CartService();
