@@ -1,5 +1,5 @@
 import express from 'express';
-import {
+import {createCart,
   getCartItems,
   addToCart,
   updateCartItem,
@@ -10,7 +10,7 @@ import {
 } from '../controllers/cartController.js';
 
 const router = express.Router();
-
+router.post('/', createCart);
 router.get('/:cid', getCartItems);
 router.post('/:cid/product/:pid', addToCart);
 router.put('/:cid/product/:pid', updateCartItem);

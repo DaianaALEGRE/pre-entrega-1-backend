@@ -1,7 +1,14 @@
 import cartService from './services/cartService.js';
 import productService from './services/productService.js';
 
-
+export const createCart = (req, res) => {
+    try {
+      const newCart = cartService.createCart();
+      res.json(newCart);
+    } catch (error) {
+      res.status(500).json({ error: 'Error al crear un nuevo carrito.' });
+    }
+  };
 export const getCartItems = (req, res) => {
     try {
         const cid = req.params.cid;
