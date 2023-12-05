@@ -25,10 +25,11 @@ class ProductService {
     try {
       await writeFile(PRODUCTS_FILE_PATH, data);
     } catch (error) {
-      console.log('Error al guardar productos:', error.message);
-      throw new Error('Error al guardar productos.');
+      console.error('Error al guardar productos:', error);
+      throw new Error('Error al guardar productos: ' + error.message);
     }
   }
+
 
   getProducts() {
     return this.products;
@@ -116,15 +117,19 @@ class ProductService {
   deleteProduct(id) {
     const index = this.products.findIndex((p) => p.id === id);
     if (index === -1) {
+      console.error('Producto no encontrado.');
       return { error: 'Producto no encontrado.' };
     }
-
-    this.products.splice(index, 1);
-    this.saveProducts().catch((error) => {
-      console.log('Error al eliminar el producto:', error.message);
+    try {
+      this.products.splice(index, 1);
+      this.saveProducts();
+      return { success: true };
+    } catch (error) {
+      console.error('Error al eliminar el producto:', error.message);
       return { error: 'Error al eliminar el producto.' };
-    });
+    }
   }
+
 }
 
 export default new ProductService();

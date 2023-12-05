@@ -1,8 +1,9 @@
+import { socketServer } from '../app.js';
 import productService from './services/productService.js';
 
 export const getProducts = async (req, res) => {
   try {
-    const limit = req.query.limit;
+    const limit = req?.query?.limit; 
     const products = await productService.getProducts();
 
     if (limit) {
@@ -15,6 +16,7 @@ export const getProducts = async (req, res) => {
     res.status(500).json({ error: 'Error al obtener productos.' });
   }
 };
+
 
 export const addProduct = async (req, res) => {
   try {
@@ -67,15 +69,15 @@ export const deleteProduct = async (req, res) => {
   try {
     const productId = parseInt(req.params.pid);
     const result = productService.deleteProduct(productId);
-
     if (result?.error) {
       res.status(500).json({ error: result.error });
       return;
     }
-
+    socketServer.emit('productDeleted', productId);
     res.json({ message: 'Producto eliminado con éxito.' });
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ error: 'Error al eliminar el producto.' });
   }
 };
+

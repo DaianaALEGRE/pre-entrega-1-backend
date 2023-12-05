@@ -1,4 +1,4 @@
-// fileUtils.js
+
 import fs from 'fs/promises';
 
 export const readFile = async (filePath) => {
@@ -19,3 +19,4 @@ export const writeFile = async (filePath, data) => {
     throw new Error(`Error al escribir en el archivo ${filePath}.`);
   }
 };
+

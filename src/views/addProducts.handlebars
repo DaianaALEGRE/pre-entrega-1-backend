@@ -1,0 +1,38 @@
+<section class="container">
+  <div class="title-header">
+    <h2>Agregar Producto:</h2>
+    <a href="/"> &#8592; Volver hacia atras</a>
+  </div>
+  <form action="/add-products" method="POST">
+    <div>
+      <label for="title" id="title">Nombre del producto:</label>
+      <input type="text" name="title" placeholder="Ingresa el nombre del producto.">
+    </div>
+    <div>
+      <label for="description" id="description">Descripción del producto:</label>
+      <input type="text" name="description" placeholder="Ingresa la descripcion del producto.">
+    </div>
+    <div>
+      <label for="thumbnail" id="thumbnail">Imagen del producto:</label>
+      <input type="text" name="thumbnail" placeholder="Ingresa la url de la imagen del producto.">
+    </div>
+    <div>
+      <label for="stock" id="stock">Stock del producto:</label>
+      <input type="text" name="stock" placeholder="Ingresa la cantidad de stock del producto.">
+    </div>
+    <div>
+      <label for="price" id="price">Precio del producto:</label>
+      <input type="text" name="price" placeholder="Ingresa la precio del producto.">
+    </div>
+    <button type="submit">Agregar producto</button>
+  </form>
+
+  {{#if error}}
+  <p class="error">{{error}}</p>
+  {{/if}}
+  {{#if success}}
+  <p class="success" >¡El producto ha sido agregado exitosamente!</p>
+  {{/if}}
+</section>
+
+<script src="/js/index.js"></script>

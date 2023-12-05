@@ -1,0 +1,23 @@
+<section class="container">
+ <div class="title-header">
+  <h2>Productos:</h2>
+  <a href="/add-products">Agregar Productos</a>
+ </div>
+  {{#if products}}
+  <article class="products-list">
+    {{#each products}}
+    <div class="product-card" id={{id}}>
+      <img src="https://source.unsplash.com/480x300/?foods&random={{id}}" alt="">
+      <div class="product-info">
+        <h3>{{title}}</h3>
+        <p><span>Descripción:</span> <br> {{description}}</p>
+        <p><span>Stock disponible:</span> {{stock}}</p>
+        <p>${{price}}</p>
+      </div>
+    </div>
+    {{/each}}
+  </article>
+  {{else}}
+  <p>No hay productos.</p>
+  {{/if}}
+</section>

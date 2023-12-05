@@ -1,0 +1,23 @@
+<section class="container">
+  <form action="/user" method="POST">
+    <div>
+      <label for="name" id="name">Nombre:</label>
+      <input type="text" name="name" placeholder="Ingresa tu nombre.">
+    </div>
+    <div>
+      <label for="email" id="email">Email:</label>
+      <input type="email" name="email" placeholder="Ingresa tu email.">
+    </div>
+    <div>
+      <label for="password" id="password">Contraseña:</label>
+      <input type="password" name="password" placeholder="Ingresa tu contraseña.">
+    </div>
+    <button type="submit">Registrarse</button>
+  </form>
+
+  {{#if success}}
+  <p class="success">¡El usuario {{user.name}} ha sido creado!</p>
+  {{/if}}
+</section>
+
+<script src="/js/index.js"></script>
